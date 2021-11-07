@@ -1,18 +1,50 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { auth, provider } from "../firebase";
 import styled from 'styled-components'
-import { selectUserName, selectUserPhoto } from "../features/user/userSlice"
-import { useSelector } from "react-redux"
+import { selectUserName, selectUserPhoto, setUserLogin, setSignOut } from "../features/user/userSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+// tutorial had useHistory which has been replaced with useNavigate
 
 function Header() {
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const userName = useSelector(selectUserName);
     const userPhoto = useSelector(selectUserPhoto);
+    useEffect (() =>{
+        auth.onAuthStateChanged(async (user)=>{
+            if (user){
+                dispatch(setUserLogin({
+                    name: user.displayName,
+                    email: user.email,
+                    photo: user.photoURL
+                }))
+                navigate("/")
+            }
+        })
+    }, [])
+
 
     const signIn = () => {
         auth.signInWithPopup(provider)
         .then((result)=>{
             console.log(result);
+            let user = result.user
+            dispatch(setUserLogin({
+                name: user.displayName,
+                email: user.email,
+                photo: user.photoURL
+            }))
+            navigate("/")
+        })
+    }
+
+    const signOut = () => {
+        auth.signOut()
+        .then(()=>{
+            dispatch(setSignOut());
+            navigate("/login")
         })
     }
 
@@ -49,7 +81,7 @@ function Header() {
                         </a>
 
                     </NavMenu>
-                    <UserImg src="/images/billy.jpeg" />
+                    <UserImg onClick={signOut} src={userPhoto} alt={userName} title={userName} />
                 </>
             }
         </Nav>
