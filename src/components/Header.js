@@ -1,38 +1,57 @@
 import React from 'react'
+import { auth, provider } from "../firebase";
 import styled from 'styled-components'
+import { selectUserName, selectUserPhoto } from "../features/user/userSlice"
+import { useSelector } from "react-redux"
 
 function Header() {
+
+    const userName = useSelector(selectUserName);
+    const userPhoto = useSelector(selectUserPhoto);
+
+    const signIn = () => {
+        auth.signInWithPopup(provider)
+        .then((result)=>{
+            console.log(result);
+        })
+    }
+
     return (
         <Nav>
             <Logo src="/images/logo.svg" />
-            <NavMenu>
-                <a href="#">
-                    <img src="/images/home-icon.svg" alt="Home" />
-                    <span>Home</span>
-                </a>
-                <a href="#">
-                    <img src="/images/search-icon.svg" alt="Search" />
-                    <span>Search</span>
-                </a>
-                <a href="#">
-                    <img src="/images/watchlist-icon.svg" alt="Watchlist" />
-                    <span>Watchlist</span>
-                </a>
-                <a href="#">
-                    <img src="/images/original-icon.svg" alt="Originals" />
-                    <span>Originals</span>
-                </a>
-                <a href="#">
-                    <img src="/images/movie-icon.svg" alt="Movies" />
-                    <span>Movies</span>
-                </a>
-                <a href="#">
-                    <img src="/images/series-icon.svg" alt="Series" />
-                    <span>Series</span>
-                </a>
+            { !userName ?
+                <Login onClick={signIn}>Login</Login> :
+                <>
+                    <NavMenu>
+                        <a href="#">
+                            <img src="/images/home-icon.svg" alt="Home" />
+                            <span>Home</span>
+                        </a>
+                        <a href="#">
+                            <img src="/images/search-icon.svg" alt="Search" />
+                            <span>Search</span>
+                        </a>
+                        <a href="#">
+                            <img src="/images/watchlist-icon.svg" alt="Watchlist" />
+                            <span>Watchlist</span>
+                        </a>
+                        <a href="#">
+                            <img src="/images/original-icon.svg" alt="Originals" />
+                            <span>Originals</span>
+                        </a>
+                        <a href="#">
+                            <img src="/images/movie-icon.svg" alt="Movies" />
+                            <span>Movies</span>
+                        </a>
+                        <a href="#">
+                            <img src="/images/series-icon.svg" alt="Series" />
+                            <span>Series</span>
+                        </a>
 
-            </NavMenu>
-            <UserImg src="/images/billy.jpeg" />
+                    </NavMenu>
+                    <UserImg src="/images/billy.jpeg" />
+                </>
+            }
         </Nav>
     )
 }
@@ -106,4 +125,22 @@ const UserImg = styled.img`
     height: 48px;
     border-radius: 50%;
     cursor: pointer;
+`
+// 07:01:16 if we end up needing the LoginContainer
+const Login = styled.div`
+    border: 1px solid #f9f9f9;
+    border-radius: 4px;
+    padding: 8px 16px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 250ms ease 0s;
+    &:hover {
+        background-color: #f9f9f9;
+        color: #000;
+        border-color: transparent;
+    }
 `
