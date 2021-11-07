@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useParams } from "react-router-dom"
 import db from "../firebase"
 
 function Detail() {
     const { id } = useParams();
-    // const [ movie, setMovie ] = useState()
-
+    const [ movie, setMovie ] = useState()
+    // tutorial error - didn't import useState.
     useEffect(() =>{
         // grab movie data
         db.collection("movies")
@@ -20,39 +20,45 @@ function Detail() {
                 // redirect to home page
             }
         })
-    }, [])
+    }, [id])
+
+    console.log("Movie is", movie);
 
     return (
         <Container>
-            <Background>
-                <img src="https://cdn.vox-cdn.com/thumbor/wJ71E7nJ_4Wj0btm5seEnHNJ4Xk=/0x0:4096x2304/1200x800/filters:focal(1973x1175:2627x1829)/cdn.vox-cdn.com/uploads/chorus_image/image/60190709/BO_RGB_s120_22a_cs_pub.pub16.318.0.jpg" alt="" />
-            </Background>
-            <ImageTitle>
-                <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/EF737B93E2F2ABE27C74CBBEB322F18A421E7986129E9989587CEF2295B0447F/scale?width=1344&aspectRatio=1.78&format=png" alt="" />
-            </ImageTitle>
-            <Controls>
-                <PlayButton>
-                    <img src="/images/play-icon-black.png" alt="" />
-                    <span>Play</span>
-                </PlayButton>
-                <TrailerButton>
-                    <img src="/images/play-icon-white.png" alt="" />
-                    <span>Trailer</span>
-                </TrailerButton>
-                <AddButton>
-                    <span>+</span>
-                </AddButton>
-                <GroupWatchButton>
-                    <img src="/images/group-icon.png" alt="" />
-                </GroupWatchButton>
+            {movie && (
+                <>
+                    <Background>
+                        <img src={movie.backgroundImg} alt="" />
+                    </Background>
+                    <ImageTitle>
+                        <img src={movie.titleImg} alt="" />
+                    </ImageTitle>
+                    <Controls>
+                        <PlayButton>
+                            <img src="/images/play-icon-black.png" alt="" />
+                            <span>Play</span>
+                        </PlayButton>
+                        <TrailerButton>
+                            <img src="/images/play-icon-white.png" alt="" />
+                            <span>Trailer</span>
+                        </TrailerButton>
+                        <AddButton>
+                            <span>+</span>
+                        </AddButton>
+                        <GroupWatchButton>
+                            <img src="/images/group-icon.png" alt="" />
+                        </GroupWatchButton>
 
-            </Controls>
-            <SubTitle>
-                2018 • 7m • Family, Fantasy, Kids, Animation
-            </SubTitle>
-            <Description>
-                A Chinese mom who's sad when her grown son leaves home gets another chance at motherhood when one of her dumplings springs to life. But she finds that nothing stays cute and small forever.
-            </Description>
+                    </Controls>
+                    <SubTitle>
+                        {movie.subTitle}
+                    </SubTitle>
+                    <Description>
+                        {movie.description}
+                    </Description>
+                </>
+            )}
         </Container>
     )
 }
