@@ -51,36 +51,36 @@ function Header() {
     return (
         <Nav>
             <Logo src="/images/logo.svg" />
+            <NavMenu>
+                <a href="#">
+                    <img src="/images/home-icon.svg" alt="Home" />
+                    <span>Home</span>
+                </a>
+                <a href="#">
+                    <img src="/images/search-icon.svg" alt="Search" />
+                    <span>Search</span>
+                </a>
+                <a href="#">
+                    <img src="/images/watchlist-icon.svg" alt="Watchlist" />
+                    <span>Watchlist</span>
+                </a>
+                <a href="#">
+                    <img src="/images/original-icon.svg" alt="Originals" />
+                    <span>Originals</span>
+                </a>
+                <a href="#">
+                    <img src="/images/movie-icon.svg" alt="Movies" />
+                    <span>Movies</span>
+                </a>
+                <a href="#">
+                    <img src="/images/series-icon.svg" alt="Series" />
+                    <span>Series</span>
+                </a>
+
+            </NavMenu>
             { !userName ?
                 <Login onClick={signIn}>Login</Login> :
                 <>
-                    <NavMenu>
-                        <a href="#">
-                            <img src="/images/home-icon.svg" alt="Home" />
-                            <span>Home</span>
-                        </a>
-                        <a href="#">
-                            <img src="/images/search-icon.svg" alt="Search" />
-                            <span>Search</span>
-                        </a>
-                        <a href="#">
-                            <img src="/images/watchlist-icon.svg" alt="Watchlist" />
-                            <span>Watchlist</span>
-                        </a>
-                        <a href="#">
-                            <img src="/images/original-icon.svg" alt="Originals" />
-                            <span>Originals</span>
-                        </a>
-                        <a href="#">
-                            <img src="/images/movie-icon.svg" alt="Movies" />
-                            <span>Movies</span>
-                        </a>
-                        <a href="#">
-                            <img src="/images/series-icon.svg" alt="Series" />
-                            <span>Series</span>
-                        </a>
-
-                    </NavMenu>
                     <UserImg onClick={signOut} src={userPhoto} alt={userName} title={userName} />
                 </>
             }
