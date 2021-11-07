@@ -1,3 +1,7 @@
+## LIVE DEMO:
+https://react-disneyplus-clone-d545d.firebaseapp.com/
+Please note - Login feature only works locally for now
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
 ## Available Scripts
